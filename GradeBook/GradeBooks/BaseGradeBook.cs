@@ -9,10 +9,14 @@ using Newtonsoft.Json.Linq;
 
 namespace GradeBook.GradeBooks
 {
-    public class BaseGradeBook
+    public abstract class BaseGradeBook
     {
         public string Name { get; set; }
         public List<Student> Students { get; set; }
+
+        public GradeBookType Type { get; set; }
+
+        public bool IsWeighted { get; set;}
 
         public BaseGradeBook(string name)
         {
@@ -172,7 +176,7 @@ namespace GradeBook.GradeBooks
             }
 
             // #todo refactor into it's own method with calculations performed here
-            Console.WriteLine("Average Grade of all students is " + (allStudentsPoints / Students.Count));
+        Console.WriteLine("Average Grade of all students is " + (allStudentsPoints / Students.Count));
             if (campusPoints != 0)
                 Console.WriteLine("Average for only local students is " + (campusPoints / Students.Where(e => e.Enrollment == EnrollmentType.Campus).Count()));
             if (statePoints != 0)
@@ -188,6 +192,7 @@ namespace GradeBook.GradeBooks
             if (dualEnrolledPoints != 0)
                 Console.WriteLine("Average for only dual enrolled students is " + (dualEnrolledPoints / Students.Where(e => e.Type == StudentType.DualEnrolled).Count()));
         }
+
 
         public virtual void CalculateStudentStatistics(string name)
         {
